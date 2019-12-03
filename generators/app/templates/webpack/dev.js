@@ -1,4 +1,3 @@
-const opn = require('opn')
 const chalk = require('chalk')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
@@ -92,8 +91,6 @@ async function serve() {
   
   server.listen(port, domain, err => {
     err && console.log(err)
-    // 新窗口打开
-    opn(`http://${proxyConfig.ip}:${port}`)
   })
 }
 

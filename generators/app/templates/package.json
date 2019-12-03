@@ -18,9 +18,7 @@
 <% } -%>
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint --ext .vue,.js ./src/",
-    "lint:css": "stylelint \"./src/**/*.(vue|scss)\" --syntax scss",
-    "doc:components": "node ./docs/components/build.doc.components.js",
-    "doc:componentsBase": "node ./docs/components/build.doc.componentsBase.js"
+    "lint:css": "stylelint \"./src/**/*.(vue|scss)\" --syntax scss"
   },
   "husky": {
     "hooks": {
@@ -35,10 +33,8 @@
     "friendly-errors-webpack-plugin": "^1.7.0",
     "husky": "^1.1.2",
     "koa-mock-switch": "^1.0.5",
-    "marked": "^0.7.0",
     "mockjs": "^1.0.1-beta3",
     "nodemon": "^1.18.9",
-    "opn": "^5.4.0",
     "portfinder": "^1.0.19",
     "vue-style-loader": "^4.1.2",
     "webpack-bundle-analyzer": "^3.3.2",
