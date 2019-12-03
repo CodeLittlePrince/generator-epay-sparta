@@ -3,19 +3,6 @@ module.exports = {
     [
       '@babel/env',
       {
-        'targets': {
-          'browsers': [
-<% if (!isPc) { -%>
-            '> 0.1%',
-            'iOS >= 7.0',
-            'Android >= 4.3'
-<% } else { -%>
-            '> 1%',
-            'last 2 versions',
-            '<%- ieVersion %>'
-<% } -%>
-          ]
-        },
         'modules': false,
         'useBuiltIns': 'usage',
         'corejs': '2'
