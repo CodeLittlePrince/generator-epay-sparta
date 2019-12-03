@@ -15,7 +15,7 @@ module.exports = function (cname, port) {
   // 拷贝所有组件名，以及对应的md路径放入一个map中，方便调用
   const menu = []
   const componentsMap = {}
-  const componentsPath = path.join(__dirname, `../src/${cname}/`)
+  const componentsPath = path.join(__dirname, `../../src/${cname}/`)
   const list = fs.readdirSync(componentsPath)
   list.forEach(file => {
     const stat = fs.statSync(componentsPath + file)

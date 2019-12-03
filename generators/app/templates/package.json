@@ -19,8 +19,8 @@
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint --ext .vue,.js ./src/",
     "lint:css": "stylelint \"./src/**/*.(vue|scss)\" --syntax scss",
-    "build:components": "node ./build/build.doc.components.js",
-    "build:componentsBase": "node ./build/build.doc.componentsBase.js"
+    "doc:components": "node ./docs/components/build.doc.components.js",
+    "doc:componentsBase": "node ./docs/components/build.doc.componentsBase.js"
   },
   "husky": {
     "hooks": {
