@@ -1,8 +1,8 @@
 {
-  "name": "generator-njr-vue",
-  "version": "0.6.12",
+  "name": "generator-epay-sparta",
+  "version": "0.0.1",
   "description": "a vue scaffolding producted by zixiu",
-  "homepage": "https://github.com/CodeLittlePrince/generator-njr-vue",
+  "homepage": "https://github.com/CodeLittlePrince/generator-epay-sparta",
   "author": {
     "name": "子咻",
     "email": "1006312908@qq.com",

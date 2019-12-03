@@ -9,7 +9,7 @@ module.exports = class extends Generator {
   initializing() {
     // 打印欢迎语
     this.log(
-      yosay(`Welcome to the shining ${chalk.cyan('generator-njr-vue')} generator!`)
+      yosay(`Welcome to the shining ${chalk.cyan('generator-epay-sparta')} generator!`)
     );
   }
 
