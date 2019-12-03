@@ -32,7 +32,7 @@
     "concurrently": "^3.6.1",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "husky": "^1.1.2",
-    "koa-mock-switch": "^1.0.5",
+    "koa-mock-switch": "^1.0.6",
     "mockjs": "^1.0.1-beta3",
     "nodemon": "^1.18.9",
     "portfinder": "^1.0.19",
