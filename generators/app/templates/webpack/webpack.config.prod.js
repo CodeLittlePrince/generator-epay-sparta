@@ -4,7 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const exec = require('child_process').execSync
 const webpackConfigBase = require('./webpack.config.base.js')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const WebpackBar = require('webpackbar')
 
 const ANALYZE = process.env.ANALYZE === 'active'
@@ -67,7 +67,7 @@ const config = Object.assign(webpackConfigBase.config, {
     },
     // 压缩js
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserPlugin({
         cache: true,
         parallel: true
       })
