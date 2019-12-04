@@ -36,7 +36,7 @@ const config = {
       common: resolve('src/common/'),
       ajax: resolve('src/common/js/ajax/'),
       utils: resolve('src/common/js/utils/'),
-      views: resolve('src/views/'),
+      pages: resolve('src/pages/'),
       components: resolve('src/components/'),
       componentsBase: resolve('src/componentsBase/'),
       directives: resolve('src/directives/'),
