@@ -276,7 +276,7 @@ module.exports = class extends Generator {
     if (this.includeVuex) {
       // 处理package.json
       pkgJson.dependencies = Object.assign({}, pkgJson.dependencies, {
-        vuex: '^3.0.1'
+        vuex: '^3.1.2'
       });
       // 把store拿出来(src/store)
       this.fs.copy(
