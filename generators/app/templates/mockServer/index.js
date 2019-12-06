@@ -19,3 +19,10 @@ const mock = new KoaMockSwitch({
 })
 // 启动mock服务
 mock.start(proxyConfig.port)
+// nodemon会command+c终止终端都无法关闭mock进程
+// 所以需要进程接受信号来调用koa-mock-switch接口来关闭
+;['SIGINT', 'SIGTERM'].forEach(signal => {
+  process.on(signal, () => {
+    mock.stop()
+  })
+})
