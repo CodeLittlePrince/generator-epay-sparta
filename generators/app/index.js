@@ -82,11 +82,11 @@ module.exports = class extends Generator {
       },
       // ==============
       // ============== pc
-      // 加element-ui
+      // 加sparta-ui
       {
         type: 'confirm',
-        name: 'includeElementUI',
-        message: 'Would you like to include "element-ui" in your project?',
+        name: 'includeSpartaUI',
+        message: 'Would you like to include "sparta-ui" in your project?',
         default: false,
         when: answers => {
           return answers.platform === 'pc';
@@ -148,7 +148,7 @@ module.exports = class extends Generator {
       this.ieVersion = answers.ieVersion;
       this.includeVuex = answers.includeVuex;
       this.useRouterHistory = answers.useRouterHistory;
-      this.includeElementUI = answers.includeElementUI;
+      this.includeSpartaUI = answers.includeSpartaUI;
       this.includeHubble = answers.includeHubble;
       this.log(chalk.green('platform: ', this.platform));
       this.log(chalk.green('name: ', this.name));
@@ -161,7 +161,7 @@ module.exports = class extends Generator {
       // 如果选择PC平台，则有下列参数
       if (this.platform === 'pc') {
         this.log(chalk.green('ieVersion: ', this.ieVersion));
-        this.log(chalk.green('includeElementUI: ', this.includeElementUI));
+        this.log(chalk.green('includeSpartaUI: ', this.includeSpartaUI));
         // 处理ie version
         this.ieVersionSupport = '';
         switch (this.ieVersion) {
@@ -205,7 +205,7 @@ module.exports = class extends Generator {
         includeUnitTest: this.includeUnitTest,
         includeE2eTest: this.includeE2eTest,
         ieVersion: this.ieVersionSupport,
-        includeElementUI: this.includeElementUI,
+        includeSpartaUI: this.includeSpartaUI,
         includeVuex: this.includeVuex,
         useRouterHistory: this.useRouterHistory,
         includeHubble: this.includeHubble,
@@ -285,20 +285,16 @@ module.exports = class extends Generator {
       );
     }
 
-    // 根据用户选择，决定是否安装element-ui
-    if (this.includeElementUI) {
-      // 处理package.json
-      pkgJson.dependencies = Object.assign({}, pkgJson.dependencies, {
-        'element-ui': '^2.13.0'
-      });
-      // 将element-ui拷贝到src/plugins中
+    // 决定是否安装sparta-ui
+    if (this.includeSpartaUI) {
+      // 将sparta-ui拷贝到src/plugins中
       this.fs.copy(
-        this.templatePath('@selections/pc/plugins/element-ui'),
-        this.destinationPath('src/plugins/element-ui')
+        this.templatePath('@selections/pc/plugins/sparta-ui'),
+        this.destinationPath('src/plugins/sparta-ui')
       );
     }
 
-    // 根据用户选择，决定是否加入hubble埋点
+    // 决定是否加入hubble埋点
     if (this.includeHubble) {
       // 将hubble拷贝到src/plugins中
       this.fs.copy(
@@ -351,7 +347,7 @@ module.exports = class extends Generator {
       );
     }
 
-    // 根据用户选择，决定是否加入微信SDK
+    // 决定是否加入微信SDK
     if (this.includeWechat) {
       // 将wechat拷贝到src/plugins中
       this.fs.copy(
@@ -360,7 +356,7 @@ module.exports = class extends Generator {
       );
     }
 
-    // 根据用户选择，决定是否加入hybrid
+    // 决定是否加入hybrid
     if (this.includeHybrid) {
       // 将hybrid拷贝到src/plugins中
       this.fs.copy(
@@ -374,11 +370,19 @@ module.exports = class extends Generator {
   }
 
   install() {
+    this._installLatestNpm();
     this.npmInstall();
   }
 
   end() {
     this.log(chalk.green('Construction completed!'));
+  }
+
+  _installLatestNpm() {
+    // 决定是否安装sparta-ui
+    if (this.includeSpartaUI) {
+      this.npmInstall(['sparta-ui'], { save: true });
+    }
   }
 
   _copyTo(from, to) {

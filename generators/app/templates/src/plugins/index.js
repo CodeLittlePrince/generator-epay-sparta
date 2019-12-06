@@ -18,8 +18,8 @@ if (process.env.NODE_ENV !== 'production') {
   import('./mock-switch')
 }
 import ajax from './ajax'
-<% if (includeElementUI) { -%>
-import elementUI from './element-ui'
+<% if (includeSpartaUI) { -%>
+import spartaUI from './sparta-ui'
 <% } -%>
 <% if (includeHubble) { -%>
 import hubble from './hubble'
@@ -36,8 +36,8 @@ Vue.use(ajax)
 <% if (!isPc) { -%>
 Vue.use(device)
 <% } -%>
-<% if (includeElementUI) { -%>
-Vue.use(elementUI)
+<% if (includeSpartaUI) { -%>
+Vue.use(spartaUI)
 <% } -%>
 <% if (includeHubble) { -%>
 Vue.use(hubble)

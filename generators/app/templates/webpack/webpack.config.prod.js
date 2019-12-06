@@ -24,8 +24,8 @@ const vendors = [
 <% if (includeVuex) { -%>
   'vuex',
 <% } -%>
-<% if (includeElementUI) { -%>
-  'element-ui',
+<% if (includeSpartaUI) { -%>
+  'sparta-ui',
 <% } -%>
 <% if (!isPc) { -%>
   'vue-lazyload',
