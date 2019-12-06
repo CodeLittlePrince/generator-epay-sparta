@@ -235,20 +235,20 @@ module.exports = class extends Generator {
     if (this.includeUnitTest) {
       // 处理package.json
       pkgJson.devDependencies = Object.assign({}, pkgJson.devDependencies, {
-        mocha: '^5.2.0',
-        karma: '^4.2.0',
-        'karma-chrome-launcher': '^2.2.0',
-        'karma-coverage': '^1.1.2',
-        'karma-jasmine': '^1.1.2',
+        mocha: '^6.2.2',
+        karma: '^4.4.1',
+        'karma-chrome-launcher': '^3.1.0',
+        'karma-coverage': '^2.0.1',
+        'karma-jasmine': '^2.0.1',
         'karma-mocha': '^1.3.0',
         'karma-mocha-reporter': '^2.2.5',
         'karma-sinon-chai': '^1.3.4',
         'karma-sourcemap-loader': '^0.3.7',
-        'karma-webpack': '^4.0.0-rc.2',
-        sinon: '^4.5.0',
+        'karma-webpack': '^4.0.2',
+        sinon: '^7.5.0',
         chai: '^4.2.0',
-        'sinon-chai': '^3.2.0',
-        'babel-plugin-istanbul': '^5.1.0'
+        'sinon-chai': '^3.3.0',
+        'babel-plugin-istanbul': '^5.2.0'
       });
       // 把unit拿出来(test/unit)
       this.fs.copy(
@@ -261,9 +261,9 @@ module.exports = class extends Generator {
     if (this.includeE2eTest) {
       // 处理package.json
       pkgJson.devDependencies = Object.assign({}, pkgJson.devDependencies, {
-        mocha: '^5.2.0',
+        mocha: '^6.2.2',
         chai: '^4.2.0',
-        nightmare: '^3.0.1'
+        nightmare: '^3.0.2'
       });
       // 把e2e拿出来(test/e2e)
       this.fs.copy(
@@ -289,7 +289,7 @@ module.exports = class extends Generator {
     if (this.includeElementUI) {
       // 处理package.json
       pkgJson.dependencies = Object.assign({}, pkgJson.dependencies, {
-        'element-ui': '^2.4.8'
+        'element-ui': '^2.13.0'
       });
       // 将element-ui拷贝到src/plugins中
       this.fs.copy(
