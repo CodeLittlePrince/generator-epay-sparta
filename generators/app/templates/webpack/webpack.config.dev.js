@@ -43,7 +43,6 @@ const config = Object.assign(webpackConfigBase.config, {
     new FriendlyErrorsPlugin(),
     // 提示信息
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.ProgressPlugin()
   ]
 })
 
