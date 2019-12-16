@@ -1,7 +1,7 @@
 const devConfig = require('../webpack/dev.config')
 const path = require('path')
 // mock文件的根目录
-const mockRoot = path.join(__dirname, '../mock')
+const mockRoot = path.join(__dirname, './mockData')
 const KoaMockSwitch = require('koa-mock-switch')
 // mock管理列表
 const mockSwitchMap = require('./mockSwitchMap')
