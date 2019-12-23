@@ -1,6 +1,6 @@
 {
   "name": "generator-epay-sparta",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "a vue scaffolding producted by zixiu",
   "homepage": "https://github.com/CodeLittlePrince/generator-epay-sparta",
   "author": {
@@ -34,6 +34,7 @@
     "npm": ">= 4.0.0"
   },
   "dependencies": {
+    "yo": "3.1.1",
     "yeoman-generator": "^2.0.1",
     "chalk": "^2.1.0",
     "yosay": "^2.0.1"
