@@ -308,21 +308,12 @@ module.exports = class extends Generator {
         this.templatePath('@selections/mobile/plugins/vue-lazyload'),
         this.destinationPath('src/plugins/vue-lazyload')
       );
-      this.fs.copy(
-        this.templatePath('@selections/mobile/package-lock.json'),
-        this.destinationPath('package-lock.json')
-      );
       // 处理package.json
       pkgJson.dependencies = Object.assign({}, pkgJson.dependencies, {
         fastclick: '^1.0.6',
         'vue-lazyload': '^1.2.6',
         'postcss-pxtorem': '^4.0.1'
       });
-    } else {
-      this.fs.copy(
-        this.templatePath('@selections/pc/package-lock.json'),
-        this.destinationPath('package-lock.json')
-      );
     }
 
     // 决定是否加入微信SDK
@@ -349,11 +340,32 @@ module.exports = class extends Generator {
 
   install() {
     this.npmInstall();
+    this._installLatestNpm();
   }
 
   end() {
     this._copyFilesFromNpmPackage();
     this.log(chalk.green('Construction completed!'));
+  }
+
+  _installLatestNpm() {
+    let savePkgs = ['@epay-sparta/cli-service'];
+    let devPkgs = [];
+    // 决定是否安装sparta-ui
+    if (this.includeSpartaUI) {
+      this.npmInstall(['sparta-ui'], { save: true });
+      savePkgs.concat('sparta-ui');
+    }
+    // 根据用户选择，决定是否安装 单元测试（unit test）
+    if (this.includeUnitTest) {
+      devPkgs.concat(['@epay-sparta/cli-plugin-unit-test', 'karma-chrome-launcher']);
+    }
+    // 根据用户选择，决定是否安装 端到端测试（e2e test）
+    if (this.includeE2eTest) {
+      devPkgs.concat(['@epay-sparta/cli-plugin-e2e-test']);
+    }
+    this.npmInstall(savePkgs, { save: true });
+    this.npmInstall(devPkgs, { 'save-dev': true });
   }
 
   /**

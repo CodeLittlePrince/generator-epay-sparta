@@ -7,8 +7,8 @@ const mock = new KoaMockSwitch({
   root: mockRoot,
   port: proxyServerConfig.port,
   switchMap: mockSwitchMap,
-  apiPrefix: '',
-  apiSuffix: '.htm'
+  apiPrefix: '/api',
+  apiSuffix: '.json'
 })
 mock.start()
 

@@ -32,9 +32,9 @@ export default {
 <% } -%>
   mounted() {
     // ajax get data
-    // this.$ajax.post('/home/hello', { page: 7 }) // FOR POST
+    // this.$ajax.post('/api/home/hello.json', { page: 7 }) // FOR POST
     this.$ajax.get(
-      '/home/hello',
+      '/api/home/hello.json',
       { page: 7 }
     ).then(res => {
       console.log(`%c${res.msg}`, 'color: blue')
@@ -43,7 +43,7 @@ export default {
     })
     // ajax get data
     this.$ajax.get(
-      '/home/kitty'
+      '/api/home/kitty.json'
     ).catch(err => {
       console.error(err.text)
     })
