@@ -6,14 +6,13 @@
 First, install [Yeoman](http://yeoman.io) and generator-epay-sparta using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
-npm install -g yo
-npm install -g generator-epay-sparta
+npm install -g yo generator-epay-sparta
 ```
 
 Then generate your new project:
 
 ```bash
-yo njr-vue
+yo epay-sparta
 ```
 
 ## Getting To Know Yeoman
