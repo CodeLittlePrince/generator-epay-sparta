@@ -345,8 +345,8 @@ module.exports = class extends Generator {
   }
 
   install() {
-    this._installLatestNpm();
     this.npmInstall();
+    this._installLatestNpm();
   }
 
   end() {
