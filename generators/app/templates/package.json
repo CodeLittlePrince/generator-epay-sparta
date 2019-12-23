@@ -5,20 +5,18 @@
   "main": "index.js",
   "scripts": {
     "mock": "nodemon -q ./mockServer/index.js",
-    "watch": "nodemon -q --watch webpack/dev.js webpack/dev.js",
-    "dev": "concurrently \"npm run mock\" \"npm run watch\" --kill-others",
-    "analyze": "cross-env NODE_ENV=production ANALYZE=active webpack -p --progress --colors --config webpack/webpack.config.prod.js",
-    "prod": "cross-env NODE_ENV=production webpack -p --progress --colors --config webpack/webpack.config.prod.js",
-    "online": "cross-env NODE_ENV=production ONLINE=active webpack -p --progress --colors --config webpack/webpack.config.prod.js",
+    "watch": "epay-sparta-service development",
+    "prod": "epay-sparta-service production",
+    "analyze": "epay-sparta-service production --analyze",
+    "online": "epay-sparta-service production --online",
+    "lint": "epay-sparta-service lint",
 <% if (includeUnitTest) { -%>
-    "test:unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
+    "test:unit": "epay-sparta-service test:unit",
 <% } -%>
 <% if (includeE2eTest) { -%>
-    "test:e2e": "mocha ./test/e2e/index.js",
+    "test:e2e": "epay-sparta-service test:e2e",
 <% } -%>
-    "lint": "npm run lint:js && npm run lint:css",
-    "lint:js": "eslint --ext .vue,.js ./src/",
-    "lint:css": "stylelint \"./src/**/*.(vue|scss)\" --syntax scss"
+    "dev": "concurrently \"npm run mock\" \"npm run watch\" --kill-others"
   },
   "husky": {
     "hooks": {
@@ -28,56 +26,16 @@
   "author": "codelittleprince",
   "license": "MIT",
   "devDependencies": {
-    "chalk": "^2.4.1",
     "concurrently": "^3.6.1",
-    "friendly-errors-webpack-plugin": "^1.7.0",
     "husky": "^3.1.0",
-    "koa-mock-switch": "^1.0.11",
+    "koa-mock-switch": "^1.0.12",
     "mockjs": "^1.0.1-beta3",
-    "nodemon": "^2.0.1",
-    "portfinder": "^1.0.19",
-    "vue-style-loader": "^4.1.2",
-    "webpack-bundle-analyzer": "^3.6.0",
-    "webpack-dev-server": "^3.9.0"
+    "nodemon": "^2.0.1"
   },
   "dependencies": {
-    "@babel/core": "^7.7.4",
-    "@babel/plugin-proposal-class-properties": "^7.7.4",
-    "@babel/plugin-syntax-dynamic-import": "^7.7.4",
-    "@babel/polyfill": "^7.7.0",
-    "@babel/preset-env": "^7.7.4",
-    "@mapbox/stylelint-processor-arbitrary-tags": "^0.2.0",
+    "@epay-sparta/cli-service": "0.0.9",
     "axios": "^0.19.0",
-    "autoprefixer": "^7.2.6",
-    "babel-eslint": "^10.0.3",
-    "babel-loader": "^8.0.6",
-    "clean-webpack-plugin": "^0.1.19",
-    "copy-webpack-plugin": "^4.5.3",
     "cross-env": "^5.2.0",
-    "css-loader": "^3.0.0",
-    "eslint": "^6.7.2",
-    "eslint-loader": "^3.0.2",
-    "eslint-plugin-html": "^6.0.0",
-    "eslint-plugin-vue": "^6.0.1",
-    "file-loader": "^2.0.0",
-    "html-webpack-plugin": "^3.2.0",
-    "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.13.0",
-    "postcss": "^7.0.23",
-    "postcss-loader": "^3.0.0",
-    "sass-loader": "^8.0.0",
-    "style-loader": "^1.0.1",
-    "stylelint": "^12.0.0",
-    "stylelint-config-standard": "^19.0.0",
-    "terser-webpack-plugin": "^2.2.1",
-    "url-loader": "^3.0.0",
-    "vue": "^2.6.10",
-    "vue-eslint-parser": "^7.0.0",
-    "vue-loader": "^15.7.2",
-    "vue-router": "^3.1.3",
-    "vue-template-compiler": "^2.6.10",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "webpackbar": "^3.2.0"
+    "vue": "^2.6.10"
   }
 }

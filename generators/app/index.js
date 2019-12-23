@@ -80,7 +80,6 @@ module.exports = class extends Generator {
           return answers.platform === 'mobile';
         }
       },
-      // ==============
       // ============== pc
       // 加sparta-ui
       {
@@ -235,41 +234,17 @@ module.exports = class extends Generator {
     if (this.includeUnitTest) {
       // 处理package.json
       pkgJson.devDependencies = Object.assign({}, pkgJson.devDependencies, {
-        mocha: '^6.2.2',
-        karma: '^4.4.1',
-        'karma-chrome-launcher': '^3.1.0',
-        'karma-coverage': '^2.0.1',
-        'karma-jasmine': '^2.0.1',
-        'karma-mocha': '^1.3.0',
-        'karma-mocha-reporter': '^2.2.5',
-        'karma-sinon-chai': '^1.3.4',
-        'karma-sourcemap-loader': '^0.3.7',
-        'karma-webpack': '^4.0.2',
-        sinon: '^7.5.0',
-        chai: '^4.2.0',
-        'sinon-chai': '^3.3.0',
-        'babel-plugin-istanbul': '^5.2.0'
+        '@epay-sparta/cli-plugin-unit-test': '0.0.5',
+        'karma-chrome-launcher': '^3.1.0'
       });
-      // 把unit拿出来(test/unit)
-      this.fs.copy(
-        this.templatePath('@selections/common/test/unit'),
-        this.destinationPath('test/unit')
-      );
     }
 
     // 根据用户选择，决定是否安装 端到端测试（e2e test）
     if (this.includeE2eTest) {
       // 处理package.json
       pkgJson.devDependencies = Object.assign({}, pkgJson.devDependencies, {
-        mocha: '^6.2.2',
-        chai: '^4.2.0',
-        nightmare: '^3.0.2'
+        '@epay-sparta/cli-plugin-e2e-test': '0.0.3'
       });
-      // 把e2e拿出来(test/e2e)
-      this.fs.copy(
-        this.templatePath('@selections/common/test/e2e'),
-        this.destinationPath('test/e2e')
-      );
     }
 
     // 根据用户选择，决定是否安装vuex
@@ -375,6 +350,7 @@ module.exports = class extends Generator {
   }
 
   end() {
+    this._copyFilesFromNpmPackage();
     this.log(chalk.green('Construction completed!'));
   }
 
@@ -385,7 +361,32 @@ module.exports = class extends Generator {
     }
   }
 
-  _copyTo(from, to) {
-    this.fs.copy(this.templatePath(from), this.destinationPath(to));
+  /**
+   * 有些文件是从npm的包中考出来到目标工程的，所以需要等npm包全都安装完以后才复制
+   * 又因为npm install用了两次，所以无法用install:end来做监听，只能写在end里了
+   */
+  _copyFilesFromNpmPackage() {
+    // 根据用户选择，决定是否安装 单元测试（unit test）
+    if (this.includeUnitTest) {
+      // 把unit拿出来(test/unit)
+      this.fs.copy(
+        this.destinationPath(
+          'node_modules/@epay-sparta/cli-plugin-unit-test/lib/template/test'
+        ),
+        this.destinationPath('test'),
+        { globOptions: { dot: true } }
+      );
+    }
+    // 根据用户选择，决定是否安装 端到端测试（e2e test）
+    if (this.includeE2eTest) {
+      // 把e2e拿出来(test/e2e)
+      this.fs.copy(
+        this.destinationPath(
+          'node_modules/@epay-sparta/cli-plugin-e2e-test/lib/template/test'
+        ),
+        this.destinationPath('test'),
+        { globOptions: { dot: true } }
+      );
+    }
   }
 };
