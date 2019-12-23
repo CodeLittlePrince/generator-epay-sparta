@@ -230,6 +230,23 @@ module.exports = class extends Generator {
       devDependencies: {}
     };
 
+    // 根据用户选择，决定是否安装 单元测试（unit test）
+    if (this.includeUnitTest) {
+      // 处理package.json
+      pkgJson.devDependencies = Object.assign({}, pkgJson.devDependencies, {
+        '@epay-sparta/cli-plugin-unit-test': '0.0.5',
+        'karma-chrome-launcher': '^3.1.0'
+      });
+    }
+
+    // 根据用户选择，决定是否安装 端到端测试（e2e test）
+    if (this.includeE2eTest) {
+      // 处理package.json
+      pkgJson.devDependencies = Object.assign({}, pkgJson.devDependencies, {
+        '@epay-sparta/cli-plugin-e2e-test': '0.0.3'
+      });
+    }
+
     // 根据用户选择，决定是否安装vuex
     if (this.includeVuex) {
       // 处理package.json
@@ -245,6 +262,9 @@ module.exports = class extends Generator {
 
     // 决定是否安装sparta-ui
     if (this.includeSpartaUI) {
+      pkgJson.dependencies = Object.assign({}, pkgJson.dependencies, {
+        'sparta-ui': '^0.0.9'
+      });
       // 将sparta-ui拷贝到src/plugins中
       this.fs.copy(
         this.templatePath('@selections/pc/plugins/sparta-ui'),
@@ -329,31 +349,11 @@ module.exports = class extends Generator {
 
   install() {
     this.npmInstall();
-    this._installLatestNpm();
   }
 
   end() {
     this._copyFilesFromNpmPackage();
     this.log(chalk.green('Construction completed!'));
-  }
-
-  _installLatestNpm() {
-    let savePkgs = ['@epay-sparta/cli-service'];
-    let devPkgs = [];
-    // 决定是否安装sparta-ui
-    if (this.includeSpartaUI) {
-      savePkgs.push('sparta-ui');
-    }
-    // 根据用户选择，决定是否安装 单元测试（unit test）
-    if (this.includeUnitTest) {
-      devPkgs.push(['@epay-sparta/cli-plugin-unit-test', 'karma-chrome-launcher']);
-    }
-    // 根据用户选择，决定是否安装 端到端测试（e2e test）
-    if (this.includeE2eTest) {
-      devPkgs.push(['@epay-sparta/cli-plugin-e2e-test']);
-    }
-    this.npmInstall(savePkgs, { save: true });
-    this.npmInstall(devPkgs, { 'save-dev': true });
   }
 
   /**
