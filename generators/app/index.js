@@ -174,10 +174,10 @@ module.exports = class extends Generator {
             this.ieVersionSupport = 'ie >= 11';
         }
       } else {
-        this.log(chalk.green('includeHybrid: ', this.includeHybrid));
-        this.log(chalk.green('includeWechat: ', this.includeWechat));
         this.includeHybrid = answers.includeHybrid;
         this.includeWechat = answers.includeWechat;
+        this.log(chalk.green('includeHybrid: ', this.includeHybrid));
+        this.log(chalk.green('includeWechat: ', this.includeWechat));
       }
     });
   }
