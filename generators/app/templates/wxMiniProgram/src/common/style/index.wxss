@@ -1,0 +1,87 @@
+@import '/common/style/base.wxss';
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button[type=primary]{
+  border-color: #f8602d;
+  color: #fff;
+  background-color: #fe5e32;
+}
+
+button.button-hover[type=primary] {
+  border-color: #F6502D;
+  color: #fff;
+  background-color: #F6502D;
+}
+
+button[type=primary][plain]{
+  background-color: transparent;
+  border-color: #f8602d;
+  color: #f8602d;
+}
+
+button.button-hover[type=primary][plain] {
+  background-color: transparent;
+  border-color: #F6502D;
+  color: #F6502D;
+}
+
+button[type=primary][plain][disabled]{
+  background-color: transparent;
+  border-color: #F6502D;
+  color: rgba(248, 96, 45, 0.6);
+}
+
+button[type=primary].is--linear {
+  box-shadow: 0rpx 6rpx 0rpx 0rpx #c9331e;
+  border-radius: 45rpx;
+  font-size: 40rpx;
+  color: #fff;
+  height: 80rpx;
+  width: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(251, 119, 46, 1) 0%,
+    rgba(246, 80, 45, 1) 100%
+  );
+  box-shadow: 0rpx 6rpx 0rpx 0rpx rgba(193, 24, 0, 1);
+}
+
+button[type=primary][disabled].is--linear {
+  color: rgba(255, 255, 255, 0.5);
+  background:rgba(239,135,103,1);
+  box-shadow:0px 6rpx 0px 0px rgba(211,96,96,1);
+}
+
+
+button.button-hover[type=primary].is--linear {
+  background-color: #F6502D;
+  background: linear-gradient(
+    180deg,
+    rgba(247, 101, 19, 1) 0%,
+    rgba(224, 60, 25, 1) 100%
+  );
+  box-shadow: 0rpx 6rpx 0rpx 0rpx rgba(193, 24, 0, 1);
+}
+
+.floatFoot {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  height: 130rpx;
+  background: linear-gradient(
+    180deg,
+    rgba(28, 36, 151, 0) 0%,
+    rgba(28, 36, 151, 1) 100%
+  );
+  padding: 0 75rpx;
+  padding: 0 75rpx calc(constant(safe-area-inset-bottom));
+  padding: 0 75rpx calc(env(safe-area-inset-bottom));
+  padding-top: 15rpx;
+}

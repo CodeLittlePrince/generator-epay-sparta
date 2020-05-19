@@ -1,0 +1,25 @@
+{
+  "pages": [
+    "pages/blank/index",
+    "pages/home/index",
+    "pages/login/index",
+    "pages/h5/index"
+  ],
+  "usingComponents": {
+    "mp-navigation-bar": "weui/navigation-bar/navigation-bar",
+    "c-navigation-bar": "components/navigation-bar/index",
+    "c-modal": "components/modal/index",
+    "c-image": "components/image/index",
+    "c-drawer": "components/drawer/index"
+  },
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#1c2497",
+    "backgroundColor": "#1c2497",
+    "backgroundColorTop": "#1c2497",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": false
+  },
+  "navigateToMiniProgramAppIdList": ["wx957456f850fe83f2"],
+  "sitemapLocation": "sitemap.json"
+}

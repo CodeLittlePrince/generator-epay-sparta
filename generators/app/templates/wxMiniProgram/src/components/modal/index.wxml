@@ -1,0 +1,24 @@
+<view
+  bindtap="close"
+  class="c-modal__mask {{!show ? 'c-modal__mask_hidden' : '' }}"
+  wx:if="{{mask}}"
+></view>
+
+<view
+  wx:if="{{show}}"
+  bindtap="close"
+  class="c-modal__wrp {{extClass}}"
+>
+  <view class="c-modal" catchtap="stopEvent">
+    <view class="c-modal__hd">
+      <i class="iconfont i-x" bindtap="close"></i>
+      <view class="c-modal__title">
+        {{ title }}
+        <slot name="title"></slot>
+      </view>
+    </view>
+    <view class="c-modal__bd">
+      <slot></slot>
+    </view>
+  </view>
+</view>

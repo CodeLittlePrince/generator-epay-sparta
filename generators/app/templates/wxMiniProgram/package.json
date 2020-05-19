@@ -1,0 +1,28 @@
+{
+  "name": "<%= name %>",
+  "version": "1.0.0",
+  "description": "<%= description %>",
+  "scripts": {
+    "mock": "nodemon -w mockServer -q mockServer/server.js",
+    "lint": "eslint \"**/*.js\"",
+    "prod": "node deploy/preupload.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "husky": "^4.2.3",
+    "koa-mock-switch": "^1.0.14",
+    "mockjs": "^1.1.0",
+    "nodemon": "^2.0.2"
+  }
+}

@@ -1,0 +1,138 @@
+@import '/common/style/iconfont.wxss';
+
+.c-modal__mask {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6)
+}
+
+.c-modal__mask_transparent {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0
+}
+
+.c-modal__wrp {
+  position: fixed;
+  z-index: 5000;
+  top: 32rpx;
+  bottom: 32rpx;
+  left: 32rpx;
+  right: 32rpx;
+  text-align: center;
+  font-size: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center
+}
+
+.c-modal {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-radius: 24rpx;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+.c-modal__hd {
+  position: relative;
+  padding: 43rpx 30rpx 38rpx;
+  color: #1C2497;
+}
+
+.c-modal__hd .i-x {
+  position: absolute;
+  top: 40rpx;
+  right: 30rpx;
+  font-size: 30rpx;
+  color: #999;
+}
+
+.c-modal__hd .i-x::after {
+  display: inline-block;
+  content: " ";
+  position: absolute;
+  top: -10rpx;
+  right: -10rpx;
+  bottom: -10rpx;
+  left: -10rpx;
+}
+
+.c-modal__title {
+  font-weight: 500;
+  font-size: 34rpx;
+  line-height: 40rpx
+}
+
+.c-modal__bd {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 10rpx 20rpx;
+  min-height: 80rpx;
+  font-size: 34rpx;
+  line-height: 1.4;
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  color: #1C2497;
+}
+
+.c-modal__bd:first-child {
+  padding: 64rpx 48rpx 0;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.9);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center
+}
+
+@media screen and (min-width: 352px) {
+  .c-modal {
+    width: 640rpx;
+    margin: 0 auto
+  }
+}
+
+.c-modal.c-modal_hidden {
+  opacity: 0;
+  transform: scale3d(1, 1, 0)
+}
+
+.c-modal {
+  opacity: 1;
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  transition: all .2s ease-in
+}
+
+.c-modal__mask.c-modal__mask_hidden {
+  opacity: 0;
+  transform: scale3d(1, 1, 0)
+}
+
+.c-modal__mask {
+  opacity: 1;
+  transform: scale3d(1, 1, 1);
+  transition: all .2s ease-in
+}

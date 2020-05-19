@@ -1,0 +1,10 @@
+<mp-navigation-bar
+  extClass="{{ extClass }}"
+  color="{{ color || '#fff' }}"
+  title="{{ title || '网易支付小程序' }}"
+  background="{{ background || '#1c2497' }}"
+>
+  <view slot="left">
+    <view class="houseBox" bindtap="handleBack"><i class="iconfont i-house"></i></view>
+  </view>
+</mp-navigation-bar>

@@ -1,0 +1,8 @@
+<image
+  class="c-image {{ extClass }}"
+  mode="{{ mode }}"
+  src="{{ srcCopy }}"
+  lazy-load
+  bind:error="handleError"
+  style="width: {{ width }}rpx; height: {{ height }}rpx"
+/>

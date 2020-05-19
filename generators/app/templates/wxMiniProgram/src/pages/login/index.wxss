@@ -1,0 +1,34 @@
+@import '/common/style/index.wxss';
+
+page {
+  background-color: #1d259f;
+}
+
+.container {
+  display: absolute;
+  flex-direction: column;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+.full-bg-img {
+  width: 750rpx;
+  height: 1800rpx;
+}
+
+.action-container {
+  position: absolute;
+  top: 635rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500rpx;
+
+}
+
+.loginBtn {
+  margin-top: 48rpx;
+}
+
+

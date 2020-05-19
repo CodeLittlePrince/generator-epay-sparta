@@ -29,6 +29,10 @@ module.exports = class extends Generator {
           {
             name: 'Mobile',
             value: 'mobile'
+          },
+          {
+            name: 'Wechat Mini Program',
+            value: 'wxMiniProgram'
           }
         ]
       },
@@ -43,22 +47,38 @@ module.exports = class extends Generator {
       {
         type: 'input',
         name: 'description',
-        message: 'Description:',
+        message: 'Project description:',
         default: ''
+      },
+      // 微信小程序appId
+      {
+        type: 'input',
+        name: 'wxMiniProgramAppId',
+        message: 'Wechat mini program appId:',
+        default: '',
+        when: answers => {
+          return answers.platform === 'wxMiniProgram';
+        }
       },
       // 加vuex
       {
         type: 'confirm',
         name: 'includeVuex',
         message: 'Would you like to include "vuex" in your project?',
-        default: true
+        default: true,
+        when: answers => {
+          return answers.platform !== 'wxMiniProgram';
+        }
       },
       // 是否使用vue-router的history模式
       {
         type: 'confirm',
         name: 'useRouterHistory',
         message: 'Would you like to use "history" mode of vue-router?',
-        default: false
+        default: false,
+        when: answers => {
+          return answers.platform !== 'wxMiniProgram';
+        }
       },
       // ============== mobile
       // 加wechat js-SDK
@@ -121,63 +141,80 @@ module.exports = class extends Generator {
         type: 'confirm',
         name: 'includeUnitTest',
         message: 'Would you like to include "unit-test"?',
-        default: false
+        default: false,
+        when: answers => {
+          return answers.platform !== 'wxMiniProgram';
+        }
       },
       // 端到端测试
       {
         type: 'confirm',
         name: 'includeE2eTest',
         message: 'Would you like to include "e2e-test"?',
-        default: false
+        default: false,
+        when: answers => {
+          return answers.platform !== 'wxMiniProgram';
+        }
       },
       // 加hubble
       {
         type: 'confirm',
         name: 'includeHubble',
         message: 'Would you like to include "hubble of netease" in your project?',
-        default: false
+        default: false,
+        when: answers => {
+          return answers.platform !== 'wxMiniProgram';
+        }
       }
     ];
     return this.prompt(prompts).then(answers => {
       this.platform = answers.platform;
       this.name = answers.name;
       this.description = answers.description;
-      this.includeUnitTest = answers.includeUnitTest;
-      this.includeE2eTest = answers.includeE2eTest;
-      this.ieVersion = answers.ieVersion;
-      this.includeVuex = answers.includeVuex;
-      this.useRouterHistory = answers.useRouterHistory;
-      this.includeSpartaUI = answers.includeSpartaUI;
-      this.includeHubble = answers.includeHubble;
-      this.log(chalk.green('platform: ', this.platform));
-      this.log(chalk.green('name: ', this.name));
-      this.log(chalk.green('description: ', this.description));
-      this.log(chalk.green('includeUnitTest: ', this.includeUnitTest));
-      this.log(chalk.green('includeE2eTest: ', this.includeE2eTest));
-      this.log(chalk.green('includeVuex: ', this.includeVuex));
-      this.log(chalk.green('useRouterHistory: ', this.useRouterHistory));
-      this.log(chalk.green('includeHubble: ', this.includeHubble));
-      // 如果选择PC平台，则有下列参数
-      if (this.platform === 'pc') {
-        this.log(chalk.green('ieVersion: ', this.ieVersion));
-        this.log(chalk.green('includeSpartaUI: ', this.includeSpartaUI));
-        // 处理ie version
-        this.ieVersionSupport = '';
-        switch (this.ieVersion) {
-          case '9':
-            this.ieVersionSupport = 'ie >= 9';
-            break;
-          case '10':
-            this.ieVersionSupport = 'ie >= 10';
-            break;
-          default:
-            this.ieVersionSupport = 'ie >= 11';
-        }
+      if (this.platform === 'wxMiniProgram') {
+        this.wxMiniProgramAppId = answers.wxMiniProgramAppId.trim();
+        this.log(chalk.green('platform: ', this.platform));
+        this.log(chalk.green('name: ', this.name));
+        this.log(chalk.green('description: ', this.description));
+        this.log(chalk.green('appId: ', this.wxMiniProgramAppId));
       } else {
-        this.includeHybrid = answers.includeHybrid;
-        this.includeWechat = answers.includeWechat;
-        this.log(chalk.green('includeHybrid: ', this.includeHybrid));
-        this.log(chalk.green('includeWechat: ', this.includeWechat));
+        this.includeUnitTest = answers.includeUnitTest;
+        this.includeE2eTest = answers.includeE2eTest;
+        this.ieVersion = answers.ieVersion;
+        this.includeVuex = answers.includeVuex;
+        this.useRouterHistory = answers.useRouterHistory;
+        this.includeSpartaUI = answers.includeSpartaUI;
+        this.includeHubble = answers.includeHubble;
+        this.log(chalk.green('platform: ', this.platform));
+        this.log(chalk.green('name: ', this.name));
+        this.log(chalk.green('description: ', this.description));
+        this.log(chalk.green('includeUnitTest: ', this.includeUnitTest));
+        this.log(chalk.green('includeE2eTest: ', this.includeE2eTest));
+        this.log(chalk.green('includeVuex: ', this.includeVuex));
+        this.log(chalk.green('useRouterHistory: ', this.useRouterHistory));
+        this.log(chalk.green('includeHubble: ', this.includeHubble));
+        // 如果选择PC平台，则有下列参数
+        if (this.platform === 'pc') {
+          this.log(chalk.green('ieVersion: ', this.ieVersion));
+          this.log(chalk.green('includeSpartaUI: ', this.includeSpartaUI));
+          // 处理ie version
+          this.ieVersionSupport = '';
+          switch (this.ieVersion) {
+            case '9':
+              this.ieVersionSupport = 'ie >= 9';
+              break;
+            case '10':
+              this.ieVersionSupport = 'ie >= 10';
+              break;
+            default:
+              this.ieVersionSupport = 'ie >= 11';
+          }
+        } else {
+          this.includeHybrid = answers.includeHybrid;
+          this.includeWechat = answers.includeWechat;
+          this.log(chalk.green('includeHybrid: ', this.includeHybrid));
+          this.log(chalk.green('includeWechat: ', this.includeWechat));
+        }
       }
     });
   }
@@ -195,152 +232,172 @@ module.exports = class extends Generator {
   writing() {
     // 复制普通文件
     // https://github.com/sboudrias/mem-fs-editor
-    this.fs.copyTpl(
-      this.templatePath(),
-      this.destinationPath(),
-      {
-        isPc: this.platform === 'pc',
-        name: this.name,
-        includeUnitTest: this.includeUnitTest,
-        includeE2eTest: this.includeE2eTest,
-        ieVersion: this.ieVersionSupport,
-        includeSpartaUI: this.includeSpartaUI,
-        includeVuex: this.includeVuex,
-        useRouterHistory: this.useRouterHistory,
-        includeHubble: this.includeHubble,
-        includeHybrid: this.includeHybrid,
-        includeWechat: this.includeWechat
-      },
-      {},
-      {
-        globOptions: {
-          // https://github.com/isaacs/node-glob
-          dot: true,
-          ignore: ['**/@selections/**'],
-          gitignore: false
+    if (this.platform === 'wxMiniProgram') {
+      this.fs.copyTpl(
+        this.templatePath('wxMiniProgram'),
+        this.destinationPath(),
+        {
+          name: this.name,
+          description: this.description,
+          wxMiniProgramAppId: this.wxMiniProgramAppId
+        },
+        {},
+        {
+          globOptions: {
+            dot: true,
+            gitignore: false
+          }
         }
+      );
+    } else {
+      this.fs.copyTpl(
+        this.templatePath('web'),
+        this.destinationPath(),
+        {
+          isPc: this.platform === 'pc',
+          name: this.name,
+          includeUnitTest: this.includeUnitTest,
+          includeE2eTest: this.includeE2eTest,
+          ieVersion: this.ieVersionSupport,
+          includeSpartaUI: this.includeSpartaUI,
+          includeVuex: this.includeVuex,
+          useRouterHistory: this.useRouterHistory,
+          includeHubble: this.includeHubble,
+          includeHybrid: this.includeHybrid,
+          includeWechat: this.includeWechat
+        },
+        {},
+        {
+          globOptions: {
+            // https://github.com/isaacs/node-glob
+            dot: true,
+            ignore: ['**/@selections/**'],
+            gitignore: false
+          }
+        }
+      );
+      // 处理package.json
+      let pkgJson = {
+        name: this.name,
+        description: this.description,
+        dependencies: {},
+        devDependencies: {}
+      };
+
+      // 根据用户选择，决定是否安装 单元测试（unit test）
+      if (this.includeUnitTest) {
+        // 处理package.json
+        pkgJson.devDependencies = Object.assign({}, pkgJson.devDependencies, {
+          '@epay-sparta/cli-plugin-unit-test': '0.0.5',
+          'karma-chrome-launcher': '^3.1.0'
+        });
       }
-    );
 
-    // 处理package.json
-    let pkgJson = {
-      name: this.name,
-      description: this.description,
-      dependencies: {},
-      devDependencies: {}
-    };
+      // 根据用户选择，决定是否安装 端到端测试（e2e test）
+      if (this.includeE2eTest) {
+        // 处理package.json
+        pkgJson.devDependencies = Object.assign({}, pkgJson.devDependencies, {
+          '@epay-sparta/cli-plugin-e2e-test': '0.0.3'
+        });
+      }
 
-    // 根据用户选择，决定是否安装 单元测试（unit test）
-    if (this.includeUnitTest) {
-      // 处理package.json
-      pkgJson.devDependencies = Object.assign({}, pkgJson.devDependencies, {
-        '@epay-sparta/cli-plugin-unit-test': '0.0.5',
-        'karma-chrome-launcher': '^3.1.0'
-      });
+      // 根据用户选择，决定是否安装vuex
+      if (this.includeVuex) {
+        // 处理package.json
+        pkgJson.dependencies = Object.assign({}, pkgJson.dependencies, {
+          vuex: '^3.1.2'
+        });
+        // 把store拿出来(src/store)
+        this.fs.copy(
+          this.templatePath('web/@selections/common/vuex/store'),
+          this.destinationPath('src/store')
+        );
+      }
+
+      // 决定是否安装sparta-ui
+      if (this.includeSpartaUI) {
+        pkgJson.dependencies = Object.assign({}, pkgJson.dependencies, {
+          'sparta-ui': '^0.0.9'
+        });
+        // 将sparta-ui拷贝到src/plugins中
+        this.fs.copy(
+          this.templatePath('web/@selections/pc/plugins/sparta-ui'),
+          this.destinationPath('src/plugins/sparta-ui')
+        );
+      }
+
+      // 决定是否加入hubble埋点
+      if (this.includeHubble) {
+        // 将hubble拷贝到src/plugins中
+        this.fs.copy(
+          this.templatePath('web/@selections/common/plugins/hubble'),
+          this.destinationPath('src/plugins/hubble')
+        );
+      }
+
+      // 用户选择mobile做的通用文件拷贝
+      if (this.platform === 'mobile') {
+        // 将mobile通用的plugins资源拷贝到src/plugins中
+        this.fs.copy(
+          this.templatePath('web/@selections/mobile/plugins/device'),
+          this.destinationPath('src/plugins/device')
+        );
+        this.fs.copy(
+          this.templatePath('web/@selections/mobile/plugins/dialog'),
+          this.destinationPath('src/plugins/dialog')
+        );
+        this.fs.copy(
+          this.templatePath('web/@selections/mobile/plugins/fastclick'),
+          this.destinationPath('src/plugins/fastclick')
+        );
+        this.fs.copy(
+          this.templatePath('web/@selections/mobile/plugins/responsive'),
+          this.destinationPath('src/plugins/responsive')
+        );
+        this.fs.copy(
+          this.templatePath('web/@selections/mobile/plugins/toast'),
+          this.destinationPath('src/plugins/toast')
+        );
+        this.fs.copy(
+          this.templatePath('web/@selections/mobile/plugins/vue-lazyload'),
+          this.destinationPath('src/plugins/vue-lazyload')
+        );
+        // 处理package.json
+        pkgJson.dependencies = Object.assign({}, pkgJson.dependencies, {
+          fastclick: '^1.0.6',
+          'vue-lazyload': '^1.2.6',
+          'postcss-pxtorem': '^4.0.1'
+        });
+      }
+
+      // 决定是否加入微信SDK
+      if (this.includeWechat) {
+        // 将wechat拷贝到src/plugins中
+        this.fs.copy(
+          this.templatePath('web/@selections/mobile/plugins/wechat'),
+          this.destinationPath('src/plugins/wechat')
+        );
+      }
+
+      // 决定是否加入hybrid
+      if (this.includeHybrid) {
+        // 将hybrid拷贝到src/plugins中
+        this.fs.copy(
+          this.templatePath('web/@selections/mobile/plugins/hybrid'),
+          this.destinationPath('src/plugins/hybrid')
+        );
+      }
+
+      // Extend or create package.json file in destination path
+      this.fs.extendJSON(this.destinationPath('package.json'), pkgJson);
     }
-
-    // 根据用户选择，决定是否安装 端到端测试（e2e test）
-    if (this.includeE2eTest) {
-      // 处理package.json
-      pkgJson.devDependencies = Object.assign({}, pkgJson.devDependencies, {
-        '@epay-sparta/cli-plugin-e2e-test': '0.0.3'
-      });
-    }
-
-    // 根据用户选择，决定是否安装vuex
-    if (this.includeVuex) {
-      // 处理package.json
-      pkgJson.dependencies = Object.assign({}, pkgJson.dependencies, {
-        vuex: '^3.1.2'
-      });
-      // 把store拿出来(src/store)
-      this.fs.copy(
-        this.templatePath('@selections/common/vuex/store'),
-        this.destinationPath('src/store')
-      );
-    }
-
-    // 决定是否安装sparta-ui
-    if (this.includeSpartaUI) {
-      pkgJson.dependencies = Object.assign({}, pkgJson.dependencies, {
-        'sparta-ui': '^0.0.9'
-      });
-      // 将sparta-ui拷贝到src/plugins中
-      this.fs.copy(
-        this.templatePath('@selections/pc/plugins/sparta-ui'),
-        this.destinationPath('src/plugins/sparta-ui')
-      );
-    }
-
-    // 决定是否加入hubble埋点
-    if (this.includeHubble) {
-      // 将hubble拷贝到src/plugins中
-      this.fs.copy(
-        this.templatePath('@selections/common/plugins/hubble'),
-        this.destinationPath('src/plugins/hubble')
-      );
-    }
-
-    // 用户选择mobile做的通用文件拷贝
-    if (this.platform === 'mobile') {
-      // 将mobile通用的plugins资源拷贝到src/plugins中
-      this.fs.copy(
-        this.templatePath('@selections/mobile/plugins/device'),
-        this.destinationPath('src/plugins/device')
-      );
-      this.fs.copy(
-        this.templatePath('@selections/mobile/plugins/dialog'),
-        this.destinationPath('src/plugins/dialog')
-      );
-      this.fs.copy(
-        this.templatePath('@selections/mobile/plugins/fastclick'),
-        this.destinationPath('src/plugins/fastclick')
-      );
-      this.fs.copy(
-        this.templatePath('@selections/mobile/plugins/responsive'),
-        this.destinationPath('src/plugins/responsive')
-      );
-      this.fs.copy(
-        this.templatePath('@selections/mobile/plugins/toast'),
-        this.destinationPath('src/plugins/toast')
-      );
-      this.fs.copy(
-        this.templatePath('@selections/mobile/plugins/vue-lazyload'),
-        this.destinationPath('src/plugins/vue-lazyload')
-      );
-      // 处理package.json
-      pkgJson.dependencies = Object.assign({}, pkgJson.dependencies, {
-        fastclick: '^1.0.6',
-        'vue-lazyload': '^1.2.6',
-        'postcss-pxtorem': '^4.0.1'
-      });
-    }
-
-    // 决定是否加入微信SDK
-    if (this.includeWechat) {
-      // 将wechat拷贝到src/plugins中
-      this.fs.copy(
-        this.templatePath('@selections/mobile/plugins/wechat'),
-        this.destinationPath('src/plugins/wechat')
-      );
-    }
-
-    // 决定是否加入hybrid
-    if (this.includeHybrid) {
-      // 将hybrid拷贝到src/plugins中
-      this.fs.copy(
-        this.templatePath('@selections/mobile/plugins/hybrid'),
-        this.destinationPath('src/plugins/hybrid')
-      );
-    }
-
-    // Extend or create package.json file in destination path
-    this.fs.extendJSON(this.destinationPath('package.json'), pkgJson);
   }
 
   install() {
     this.npmInstall();
-    this._installLatestNpm();
+    if (this.platform !== 'wxMiniProgram') {
+      this._installLatestNpm();
+    }
   }
 
   end() {

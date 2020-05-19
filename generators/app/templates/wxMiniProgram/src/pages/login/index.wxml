@@ -1,0 +1,14 @@
+<view class="container" catch:touchmove="ignoreScrolleEvent">
+  <c-navigation-bar />
+  <c-image class="full-bg-img" width="750" height="1800" src="https://nos.globalpay.163.com/mp-global-partaner-login-full-bg.png" />
+  <view class="action-container">
+    <button
+      class="is--linear loginBtn"
+      type="primary"
+      hover-class="button-hover"
+      open-type="getPhoneNumber" bindgetphonenumber="onGetPhoneNumberCallback"
+    >
+      微信用户一键登录
+    </button>
+  </view>
+</view>

@@ -1,0 +1,9 @@
+<!-- index.wxml -->
+<view class="container">
+  <c-navigation-bar />
+  <view class="main">
+    <c-image src="/common/img/home.png" width="300" height="300"></c-image>
+    <view>登录状态：{{ hasUserInfo }}</view>
+    <button type="primary" wx:if="!hasUserInfo" bind:tap="goLogin">去登录</button>
+  </view>
+</view>

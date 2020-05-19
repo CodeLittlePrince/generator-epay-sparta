@@ -1,0 +1,15 @@
+@import '/common/style/iconfont.wxss';
+
+button,
+button::after {
+  border: none;
+}
+
+.navigator-hover {
+  background-color: transparent;
+}
+
+.c-shareCanvas {
+  position: fixed;
+  left: -5000rpx;
+}

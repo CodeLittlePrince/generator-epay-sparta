@@ -1,0 +1,41 @@
+<view class="{{ show ? 'show' :'hidden' }}"> 
+  <view
+    class="c-drawer__mask"
+    wx:if="{{ mask }}"
+    bindtap="close"
+    data-type="tap">
+  </view>
+  <view class="c-drawer {{ extClass }}">
+    <view wx:if="{{ closabled || title }}" class="c-drawer__hd">
+      <view class="c-drawer__hd__side">
+      </view>
+      <view class="c-drawer__hd__main">
+        <block wx:if="{{ title }}">
+          <text class="c-drawer__title">{{ title }}</text>
+          <text class="c-drawer__subtitle">{{ subTitle }}</text>
+        </block>
+        <block wx:else>
+          <view class="c-drawer__title"><slot name="title"></slot></view>
+        </block>
+      </view>
+      <view
+        wx:if="{{ closabled }}"
+        class="c-drawer__hd__side"
+        bindtap="close"
+        data-type="close"
+      >
+        <view class="icon-btn icon-btn_close">关闭</view>
+      </view>
+    </view>
+    <view class="c-drawer__bd">
+      <block wx:if="{{ title }}">
+        <view class="c-drawer__desc">{{ desc }}</view>
+        <view class="c-drawer__tips">{{ tips }}</view>
+      </block>
+      <slot name="desc" wx:else></slot>
+    </view>
+    <view class="c-drawer__ft">
+      <slot name="footer"></slot>
+    </view>
+  </view>
+</view>
