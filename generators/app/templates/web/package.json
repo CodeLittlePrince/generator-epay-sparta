@@ -28,7 +28,7 @@
   "devDependencies": {
     "concurrently": "^3.6.1",
     "husky": "^3.1.0",
-    "koa-mock-switch": "^2.0.1",
+    "koa-mock-switch": "^2.1.1",
     "mockjs": "^1.0.1-beta3",
     "nodemon": "^2.0.1"
   },

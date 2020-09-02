@@ -9,12 +9,12 @@ const data = Mock.mock({
 const img = Mock.Random.image('200x100')
 
 // 返回的结果处理
-module.exports = (params, shareData) => {
+module.exports = ({ params, share }) => {
   // 返回最终结果（配合mockSwitch）
   return {
     message: 'error message',
     params,
-    shareData,
+    shareData: share.data,
     result: {
       '@success': {
         msg: 'mock hello api for success',
