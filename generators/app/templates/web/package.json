@@ -4,7 +4,7 @@
   "description": "study",
   "main": "index.js",
   "scripts": {
-    "mock": "nodemon -q ./mockServer/index.js",
+    "mock": "nodemon --watch ./mockServer -q ./mockServer/index.js",
     "watch": "epay-sparta-service development",
     "prod": "epay-sparta-service production",
     "analyze": "epay-sparta-service production --analyze",
@@ -33,7 +33,7 @@
     "nodemon": "^2.0.1"
   },
   "dependencies": {
-    "@epay-sparta/cli-service": "0.0.15",
+    "@epay-sparta/cli-service": "0.1.0",
     "axios": "^0.19.0",
     "cross-env": "^5.2.0",
     "vue": "^2.6.10",
