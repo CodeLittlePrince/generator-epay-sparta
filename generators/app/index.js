@@ -6,7 +6,25 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 
 module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
+    // This makes `appname` a required argument.
+    this.argument('action', { type: String, required: false });
+    // 如果yo epay-sparta后跟了add（暂时只有add），则做特定行为
+    if (this.options.action) {
+      const handleType = args[1];
+      const handlers = {
+        'test:unit': this._handleAddTestUnit.bind(this)
+      };
+
+      handlers[handleType]();
+    }
+  }
+
   initializing() {
+    if (this.options.action) {
+      return;
+    }
     // 打印欢迎语
     this.log(
       yosay(`Welcome to the shining ${chalk.cyan('generator-epay-sparta')} generator!`)
@@ -14,6 +32,9 @@ module.exports = class extends Generator {
   }
 
   prompting() {
+    if (this.options.action) {
+      return;
+    }
     // 让用户选择是否需要包含vuex
     const prompts = [
       // 平台
@@ -141,7 +162,7 @@ module.exports = class extends Generator {
         type: 'confirm',
         name: 'includeUnitTest',
         message: 'Would you like to include "unit-test"?',
-        default: true,
+        default: false,
         when: answers => {
           return answers.platform !== 'wxMiniProgram';
         }
@@ -221,6 +242,9 @@ module.exports = class extends Generator {
   }
 
   configuring() {
+    if (this.options.action) {
+      return;
+    }
     // 因为husky原理是在安装的时候去.git文件夹中的hooks做修改
     // 所以在安装之前，需要确认git是否已经安装
     // 如果不存在git，则init一下
@@ -231,6 +255,9 @@ module.exports = class extends Generator {
   }
 
   writing() {
+    if (this.options.action) {
+      return;
+    }
     // 复制普通文件
     // https://github.com/sboudrias/mem-fs-editor
     if (this.platform === 'wxMiniProgram') {
@@ -366,7 +393,12 @@ module.exports = class extends Generator {
   }
 
   install() {
+    if (this.options.action) {
+      return;
+    }
+
     this.npmInstall();
+
     if (this.platform !== 'wxMiniProgram') {
       this._installLatestNpm();
     }
@@ -375,6 +407,16 @@ module.exports = class extends Generator {
   end() {
     this._copyFilesFromNpmPackage();
     this.log(chalk.green('Construction completed!'));
+  }
+
+  _handleAddTestUnit() {
+    this.includeUnitTest = true;
+    this.npmInstall('@epay-sparta/cli-plugin-unit-test', { 'save-dev': true });
+    this.fs.extendJSON(this.destinationPath('package.json'), {
+      scripts: {
+        'test:unit': 'epay-sparta-service test:unit'
+      }
+    });
   }
 
   _installLatestNpm() {
@@ -408,30 +450,38 @@ module.exports = class extends Generator {
     // 根据用户选择，决定是否安装 单元测试（unit test）
     if (this.includeUnitTest) {
       // 把unit拿出来(test/unit)
-      this.fs.copy(
-        this.destinationPath(
-          'node_modules/@epay-sparta/cli-plugin-unit-test/lib/template/test'
-        ),
-        this.destinationPath('test'),
-        { globOptions: { dot: true, ignore: ['**/jest.config.js'] } }
-      );
-
-      // 把unit的jest.config.js放到工程根目录
-      fs.copyFileSync(
-        'node_modules/@epay-sparta/cli-plugin-unit-test/lib/template/test/jest.config.js',
-        'jest.config.js'
-      );
+      this._copyUnitTest();
     }
     // 根据用户选择，决定是否安装 端到端测试（e2e test）
     if (this.includeE2eTest) {
       // 把e2e拿出来(test/e2e)
-      this.fs.copy(
-        this.destinationPath(
-          'node_modules/@epay-sparta/cli-plugin-e2e-test/lib/template/test'
-        ),
-        this.destinationPath('test'),
-        { globOptions: { dot: true } }
-      );
+      this._copyE2eTest();
     }
+  }
+
+  _copyUnitTest() {
+    this.fs.copy(
+      this.destinationPath(
+        'node_modules/@epay-sparta/cli-plugin-unit-test/lib/template/test'
+      ),
+      this.destinationPath('test'),
+      { globOptions: { dot: true, ignore: ['**/jest.config.js'] } }
+    );
+
+    // 把unit的jest.config.js放到工程根目录
+    fs.copyFileSync(
+      'node_modules/@epay-sparta/cli-plugin-unit-test/lib/template/test/jest.config.js',
+      'jest.config.js'
+    );
+  }
+
+  _copyE2eTest() {
+    this.fs.copy(
+      this.destinationPath(
+        'node_modules/@epay-sparta/cli-plugin-e2e-test/lib/template/test'
+      ),
+      this.destinationPath('test'),
+      { globOptions: { dot: true } }
+    );
   }
 };
