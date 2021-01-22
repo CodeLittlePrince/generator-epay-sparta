@@ -1,27 +1,25 @@
 # generator-epay-sparta [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> a vue scaffolding producted by zixiu
+> Epay前台前端脚手架
 
-## Installation
+## 介绍
+Epay前台前端脚手架（PC、H5、微信小程序）
 
-First, install [Yeoman](http://yeoman.io) and generator-epay-sparta using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+## 使用
 
 ```bash
 npm install -g yo generator-epay-sparta
 ```
 
-Then generate your new project:
+新建项目:
 
 ```bash
 yo epay-sparta
 ```
 
-## Getting To Know Yeoman
-
- * Yeoman has a heart of gold.
- * Yeoman is a person with feelings and opinions, but is very easy to work with.
- * Yeoman can be too opinionated at times but is easily convinced not to be.
- * Feel free to [learn more about Yeoman](http://yeoman.io/).
-
+在已经存在的项目上新增单测功能:
+```bash
+yo epay-sparta add test:unit
+```
 ## License
 
 MIT © [子咻](https://github.com/CodeLittlePrince)
