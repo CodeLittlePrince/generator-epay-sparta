@@ -425,7 +425,7 @@ module.exports = class extends Generator {
     this.npmInstall('@epay-sparta/cli-plugin-e2e-test', { 'save-dev': true });
     this.fs.extendJSON(this.destinationPath('package.json'), {
       scripts: {
-        'test:unit': 'epay-sparta-service test:e2e'
+        'test:e2e': 'epay-sparta-service test:e2e'
       }
     });
   }
