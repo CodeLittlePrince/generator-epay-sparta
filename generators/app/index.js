@@ -97,7 +97,7 @@ module.exports = class extends Generator {
         type: 'confirm',
         name: 'useRouterHistory',
         message: 'Would you like to use "history" mode of vue-router?',
-        default: false,
+        default: true,
         when: answers => {
           return answers.platform !== 'wxMiniProgram';
         }
