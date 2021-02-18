@@ -13,9 +13,9 @@ module.exports = {
       target: `http://localhost:${proxyServerConfig.port}`
     }],
 <% if (useRouterHistory) { -%>
-    historyApiFallback: true
+    historyApiFallback: true,
 <% } else { -%>
-    historyApiFallback: false
+    historyApiFallback: false,
 <% } -%>
   }
 }

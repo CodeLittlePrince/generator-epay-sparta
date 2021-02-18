@@ -14,7 +14,8 @@ module.exports = class extends Generator {
     if (this.options.action) {
       const handleType = args[1];
       const handlers = {
-        'test:unit': this._handleAddTestUnit.bind(this)
+        'test:unit': this._handleAddTestUnit.bind(this),
+        'test:e2e': this._handleAddTestE2e.bind(this)
       };
 
       handlers[handleType]();
@@ -419,6 +420,16 @@ module.exports = class extends Generator {
     });
   }
 
+  _handleAddTestE2e() {
+    this.includeE2eTest = true;
+    this.npmInstall('@epay-sparta/cli-plugin-e2e-test', { 'save-dev': true });
+    this.fs.extendJSON(this.destinationPath('package.json'), {
+      scripts: {
+        'test:unit': 'epay-sparta-service test:e2e'
+      }
+    });
+  }
+
   _installLatestNpm() {
     let savePkgs = ['@epay-sparta/cli-service'];
     let devPkgs = [];
@@ -465,13 +476,7 @@ module.exports = class extends Generator {
         'node_modules/@epay-sparta/cli-plugin-unit-test/lib/template/test'
       ),
       this.destinationPath('test'),
-      { globOptions: { dot: true, ignore: ['**/jest.config.js'] } }
-    );
-
-    // 把unit的jest.config.js放到工程根目录
-    fs.copyFileSync(
-      'node_modules/@epay-sparta/cli-plugin-unit-test/lib/template/test/jest.config.js',
-      'jest.config.js'
+      { globOptions: { dot: true } }
     );
   }
 
